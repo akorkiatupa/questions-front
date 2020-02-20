@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 /** @jsx jsx */
 
-import { css, jsx } from '@emotion/core';
-import { IQuestionData } from '../utils/InterfaceCollection';
-import { gray2, gray3 } from '../style/Styles';
-import RenderHelper from '../utils/RenderHelper';
+import { css, jsx } from "@emotion/core";
+import { IQuestionData } from "../utils/InterfaceCollection";
+import { gray2, gray3 } from "../style/Styles";
+import RenderHelper from "../utils/RenderHelper";
 
 interface IProps {
   data: IQuestionData;

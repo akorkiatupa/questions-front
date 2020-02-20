@@ -6,9 +6,9 @@
     "typescriptreact"
   ],
   "editor.formatOnSave": true,
-  "typescript.preferences.quoteStyle": "single",
-  "javascript.preferences.quoteStyle": "single",
-  "prettier.singleQuote": true,
+  "typescript.preferences.quoteStyle": "double",
+  "javascript.preferences.quoteStyle": "double",
+  "prettier.singleQuote": false,
   "html.format.endWithNewline": false,
   "prettier.jsxBracketSameLine": false,
   "prettier.trailingComma": "all"

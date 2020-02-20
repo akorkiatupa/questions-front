@@ -1,9 +1,9 @@
-import React from 'react';
-import { IQuestionData } from '../utils/InterfaceCollection';
+import React from "react";
+import { IQuestionData } from "../utils/InterfaceCollection";
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { gray5, accent2 } from '../style/Styles';
-import { Question } from './Question';
+import { css, jsx } from "@emotion/core";
+import { gray5, accent2 } from "../style/Styles";
+import { Question } from "./Question";
 
 interface Props {
   data: IQuestionData[];

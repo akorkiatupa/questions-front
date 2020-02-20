@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import userIcon from './user.svg';
+import { css, jsx } from "@emotion/core";
+import userIcon from "./user.svg";
 
 export const UserIcon = () => (
   <img

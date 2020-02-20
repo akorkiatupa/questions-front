@@ -1,9 +1,9 @@
 /** @jsx jsx */
 
-import { UserIcon } from '../style/Icons';
+import { UserIcon } from "../style/Icons";
 
-import { css, jsx } from '@emotion/core';
-import { fontFamily, fontSize, gray1, gray2, gray5 } from '../style/Styles';
+import { css, jsx } from "@emotion/core";
+import { fontFamily, fontSize, gray1, gray2, gray5 } from "../style/Styles";
 
 export const Header = () => (
   <div

@@ -1,11 +1,11 @@
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { PrimaryButton, PageTitle } from '../style/Styles';
-import { QuestionList } from './QuestionList';
-import { getUnansweredQuestions } from '../utils/DummyQuestions';
-import { Page } from './Page';
-import { useEffect, useState } from 'react';
-import { IQuestionData } from '../utils/InterfaceCollection';
+import { css, jsx } from "@emotion/core";
+import { PrimaryButton, PageTitle } from "../style/Styles";
+import { QuestionList } from "./QuestionList";
+import { getUnansweredQuestions } from "../utils/DummyQuestions";
+import { Page } from "./Page";
+import { useEffect, useState } from "react";
+import { IQuestionData } from "../utils/InterfaceCollection";
 
 export const HomePage = () => {
   const [questions, setQuestions] = useState<IQuestionData[] | null>(null);
@@ -20,7 +20,7 @@ export const HomePage = () => {
     doGetUnansweredQuestions();
   }, []);
 
-  console.log('rendered');
+  console.log("rendered");
 
   return (
     <Page>
