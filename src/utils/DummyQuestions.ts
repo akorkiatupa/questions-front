@@ -35,11 +35,22 @@ const questions: IQuestionData[] = [
   },
 ];
 
-export const getUnansweredQuestions = async (): Promise<IQuestionData[]> => {
+export const getAllQuestionsDummy = async (): Promise<IQuestionData[]> => {
   await wait(500);
-  return questions.filter(question => question.answers.length === 0);
+  return questions;
 };
 
 const wait = (ms: number): Promise<void> => {
   return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+export const getQuestionDummyRequest = async (
+  questionId: number,
+): Promise<IQuestionData | null> => {
+  await wait(500);
+  const results = questions.filter(
+    question => question.questionId === questionId,
+  );
+
+  return results.length === 0 ? null : results[0];
 };

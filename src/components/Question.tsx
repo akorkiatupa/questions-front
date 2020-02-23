@@ -5,6 +5,7 @@ import { css, jsx } from "@emotion/core";
 import { IQuestionData } from "../utils/InterfaceCollection";
 import { gray2, gray3 } from "../style/Styles";
 import RenderHelper from "../utils/RenderHelper";
+import { Link } from "react-router-dom";
 
 interface IProps {
   data: IQuestionData;
@@ -23,7 +24,15 @@ export const Question: React.FC<IProps> = ({ data, showContent = true }) => (
         font-size: 19px;
       `}
     >
-      {data.title}
+      <Link
+        css={css`
+          text-decoration: none;
+          color: ${gray2};
+        `}
+        to={`questions/${data.questionId}`}
+      >
+        {data.title}
+      </Link>
     </div>
     {showContent && (
       <div

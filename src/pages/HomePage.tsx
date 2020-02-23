@@ -1,32 +1,28 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { PrimaryButton, PageTitle } from "../style/Styles";
-import { QuestionList } from "./QuestionList";
-import { getUnansweredQuestions } from "../utils/DummyQuestions";
-import { Page } from "./Page";
-import { useEffect, useState } from "react";
+import { QuestionList } from "../components/QuestionList";
+import { getAllQuestionsDummy } from "../utils/DummyQuestions";
+import { Page } from "../components/Page";
+import { useEffect, useState, FC } from "react";
 import { IQuestionData } from "../utils/InterfaceCollection";
+import { RouteComponentProps } from "react-router-dom";
 
-export const HomePage = () => {
+export const HomePage: FC<RouteComponentProps> = ({ history }) => {
   const [questions, setQuestions] = useState<IQuestionData[] | null>(null);
   const [questionsLoading, setQuestionsLoading] = useState<boolean>(true);
 
-  const [count, setCount] = useState<number>(0);
-
   useEffect(() => {
     const doGetUnansweredQuestions = async () => {
-      const unansweredQuestions = await getUnansweredQuestions();
+      const unansweredQuestions = await getAllQuestionsDummy();
       setQuestions(unansweredQuestions);
       setQuestionsLoading(false);
     };
     doGetUnansweredQuestions();
   }, []);
 
-  console.log("rendered");
-
   const handleAskAQuestionClick = () => {
-    setCount(count + 1);
-    console.log("TODO - Movement to ask a question page.");
+    history.push("/ask"); // navigate programmatically
   };
 
   return (
