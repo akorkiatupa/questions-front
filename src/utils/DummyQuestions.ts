@@ -40,10 +40,6 @@ export const getAllQuestionsDummy = async (): Promise<IQuestionData[]> => {
   return questions;
 };
 
-const wait = (ms: number): Promise<void> => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
-
 export const getQuestionDummyRequest = async (
   questionId: number,
 ): Promise<IQuestionData | null> => {
@@ -53,4 +49,20 @@ export const getQuestionDummyRequest = async (
   );
 
   return results.length === 0 ? null : results[0];
+};
+
+export const searchQuestions = async (
+  criteria: string,
+): Promise<IQuestionData[]> => {
+  await wait(500);
+
+  return questions.filter(
+    question =>
+      question.title.toLowerCase().indexOf(criteria.toLowerCase()) >= 0 ||
+      question.content.toLowerCase().indexOf(criteria.toLowerCase()) >= 0,
+  );
+};
+
+const wait = (ms: number): Promise<void> => {
+  return new Promise(resolve => setTimeout(resolve, ms));
 };
