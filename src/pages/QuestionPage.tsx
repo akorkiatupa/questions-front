@@ -7,6 +7,8 @@ import { getQuestionDummyRequest } from "../utils/DummyQuestions";
 import { gray6, gray3 } from "../style/Styles";
 import { css, jsx } from "@emotion/core";
 import { AnswerList } from "../components/AnswerList";
+import { Form } from "../components/general/Form";
+import { Field } from "../components/general/Field";
 
 interface IRouteParams {
   questionId: string;
@@ -70,6 +72,15 @@ export const QuestionPage: FC<RouteComponentProps<IRouteParams>> = ({
               } on ${question.created.toLocaleDateString()} ${question.created.toLocaleTimeString()}`}
             </div>
             <AnswerList data={question.answers} />
+            <div
+              css={css`
+                margin-top: 20px;
+              `}
+            >
+              <Form submitCaption="Submit Your Answer">
+                <Field name="content" label="Your Answer" type="TextArea" />
+              </Form>
+            </div>
           </Fragment>
         )}
       </div>
