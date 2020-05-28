@@ -3,11 +3,11 @@ import { Page } from "../components/Page";
 import { Fragment, FC, useState, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { IQuestionData } from "../utils/InterfaceCollection";
-import { getQuestionDummyRequest } from "../utils/DummyQuestions";
+import { getQuestionDummyRequest, postAnswer } from "../utils/DummyQuestions";
 import { gray6, gray3 } from "../style/Styles";
 import { css, jsx } from "@emotion/core";
 import { AnswerList } from "../components/AnswerList";
-import { Form } from "../components/general/Form";
+import { Form, IValues } from "../components/general/Form";
 import { Field } from "../components/general/Field";
 import FormValidator from "../components/general/Validator";
 
@@ -30,6 +30,17 @@ export const QuestionPage: FC<RouteComponentProps<IRouteParams>> = ({
       doGetQuestion(questionId);
     }
   }, [match.params.questionId]);
+
+  const handleSubmit = async (values: IValues) => {
+    const result = await postAnswer({
+      questionId: question!.questionId,
+      content: values.content,
+      userName: "Fred",
+      created: new Date(),
+    });
+
+    return { success: result ? true : false };
+  };
 
   return (
     <Page>
@@ -86,6 +97,9 @@ export const QuestionPage: FC<RouteComponentProps<IRouteParams>> = ({
                     { validator: FormValidator.minLength, arg: 50 },
                   ],
                 }}
+                onSubmit={handleSubmit}
+                errorMessage="There was a problem with your answer"
+                successMessage="Your answer was successfully submitted"
               >
                 <Field name="content" label="Your Answer" type="TextArea" />
               </Form>

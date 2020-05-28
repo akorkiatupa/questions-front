@@ -1,4 +1,4 @@
-import { IQuestionData } from "./InterfaceCollection";
+import { IQuestionData, IAnswerData } from "./InterfaceCollection";
 
 const questions: IQuestionData[] = [
   {
@@ -65,4 +65,37 @@ export const searchQuestions = async (
 
 const wait = (ms: number): Promise<void> => {
   return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+export interface IPostQuestionData {
+  title: string;
+  content: string;
+  userName: string;
+  created: Date;
+}
+
+export const postQuestion = async (
+  question: IPostQuestionData,
+): Promise<IQuestionData | undefined> => {
+  await wait(500);
+  const questionId = Math.max(...questions.map(q => q.questionId)) + 1;
+  const newQuestion: IQuestionData = { ...question, questionId, answers: [] };
+  questions.push(newQuestion);
+  return newQuestion;
+};
+
+export interface PostAnswerData {
+  questionId: number;
+  content: string;
+  userName: string;
+  created: Date;
+}
+export const postAnswer = async (
+  answer: PostAnswerData,
+): Promise<IAnswerData | undefined> => {
+  await wait(500);
+  const question = questions.filter(q => q.questionId === answer.questionId)[0];
+  const answerInQuestion: IAnswerData = { answerId: 99, ...answer };
+  question.answers.push(answerInQuestion);
+  return answerInQuestion;
 };
