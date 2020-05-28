@@ -9,6 +9,7 @@ import { css, jsx } from "@emotion/core";
 import { AnswerList } from "../components/AnswerList";
 import { Form } from "../components/general/Form";
 import { Field } from "../components/general/Field";
+import FormValidator from "../components/general/Validator";
 
 interface IRouteParams {
   questionId: string;
@@ -77,7 +78,15 @@ export const QuestionPage: FC<RouteComponentProps<IRouteParams>> = ({
                 margin-top: 20px;
               `}
             >
-              <Form submitCaption="Submit Your Answer">
+              <Form
+                submitCaption="Submit Your Answer"
+                validationRules={{
+                  content: [
+                    { validator: FormValidator.required },
+                    { validator: FormValidator.minLength, arg: 50 },
+                  ],
+                }}
+              >
                 <Field name="content" label="Your Answer" type="TextArea" />
               </Form>
             </div>

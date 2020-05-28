@@ -31,7 +31,7 @@ const baseCSS = css`
 `;
 
 export const Field: FC<IProps> = ({ name, label, type = "Text" }) => {
-  const { setValue } = useContext(FormContext);
+  const { setValue, touched, validate, setTouched } = useContext(FormContext);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
@@ -39,12 +39,26 @@ export const Field: FC<IProps> = ({ name, label, type = "Text" }) => {
     if (setValue) {
       setValue(name, e.currentTarget.value);
     }
+    if (touched[name]) {
+      if (validate) {
+        validate(name);
+      }
+    }
+  };
+
+  const handleBlur = () => {
+    if (setTouched) {
+      setTouched(name);
+    }
+    if (validate) {
+      validate(name);
+    }
   };
 
   return (
     // destructing values from context
     <FormContext.Consumer>
-      {({ values }) => (
+      {({ values, errors }) => (
         <div
           css={css`
             display: flex;
@@ -69,6 +83,7 @@ export const Field: FC<IProps> = ({ name, label, type = "Text" }) => {
               type={type.toLowerCase()}
               css={baseCSS}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
           )}
           {type === "TextArea" && (
@@ -80,8 +95,22 @@ export const Field: FC<IProps> = ({ name, label, type = "Text" }) => {
                 height: 100px;
               `}
               onChange={handleChange}
+              onBlur={handleBlur}
             />
           )}
+          {errors[name] &&
+            errors[name].length > 0 &&
+            errors[name].map(error => (
+              <div
+                key={error}
+                css={css`
+                  font-size: 12px;
+                  color: red;
+                `}
+              >
+                {error}
+              </div>
+            ))}
         </div>
       )}
     </FormContext.Consumer>

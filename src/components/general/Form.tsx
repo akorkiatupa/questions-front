@@ -2,26 +2,78 @@
 import { FC, useState, createContext } from "react";
 import { PrimaryButton, gray5, gray6 } from "../../style/Styles";
 import { css, jsx } from "@emotion/core";
+import { IValidationProp, IValidation } from "./Validator";
 
-export interface IProps {
+interface IProps {
   submitCaption?: string;
+  validationRules?: IValidationProp;
 }
 
-export interface IValues {
+interface IValues {
   [key: string]: any;
+}
+
+interface IErrors {
+  [key: string]: string[];
+}
+
+interface ITouched {
+  [key: string]: boolean;
 }
 
 interface IFormContextProps {
   values: IValues;
   setValue?: (fieldName: string, value: any) => void;
+  errors: IErrors;
+  validate?: (fieldName: string) => void;
+  touched: ITouched;
+  setTouched?: (fieldName: string) => void;
 }
 
 export const FormContext = createContext<IFormContextProps>({
   values: {},
+  errors: {},
+  touched: {},
 });
 
-export const Form: FC<IProps> = ({ submitCaption, children }) => {
+// export only Form since other interfaces are meant to be used internally
+export const Form: FC<IProps> = ({
+  submitCaption,
+  children,
+  validationRules,
+}) => {
   const [values, setValues] = useState<IValues>({});
+  const [errors, setErrors] = useState<IErrors>({});
+  const [touched, setTouched] = useState<ITouched>({});
+
+  const validate = (fieldName: string): string[] => {
+    if (!validationRules) {
+      return [];
+    }
+    if (!validationRules[fieldName]) {
+      return [];
+    }
+    const rules = Array.isArray(validationRules[fieldName])
+      ? (validationRules[fieldName] as IValidation[])
+      : ([validationRules[fieldName]] as IValidation[]);
+
+    const fieldErrors: string[] = [];
+
+    rules.forEach(rule => {
+      const error = rule.validator(values[fieldName], rule.arg);
+
+      if (error) {
+        fieldErrors.push(error);
+      }
+    });
+
+    const newErrors = { ...errors, [fieldName]: fieldErrors };
+
+    setErrors(newErrors);
+
+    return fieldErrors;
+  };
+
   return (
     // read more about setting array key : value combination states feels new and weird
     <FormContext.Provider
@@ -29,6 +81,12 @@ export const Form: FC<IProps> = ({ submitCaption, children }) => {
         values,
         setValue: (fieldName, value) => {
           setValues({ ...values, [fieldName]: value });
+        },
+        errors,
+        validate,
+        touched,
+        setTouched: (fieldName: string) => {
+          setTouched({ ...touched, [fieldName]: true });
         },
       }}
     >
