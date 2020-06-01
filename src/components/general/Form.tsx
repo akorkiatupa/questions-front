@@ -7,7 +7,8 @@ import { IValidationProp, IValidation } from "./Validator";
 interface IFormProps {
   submitCaption?: string;
   validationRules?: IValidationProp;
-  onSubmit: (values: IValues) => Promise<ISubmitResult>;
+  onSubmit: (values: IValues) => Promise<ISubmitResult> | void;
+  submitResult?: ISubmitResult;
   successMessage?: string;
   errorMessage?: string;
 }
@@ -50,6 +51,7 @@ export const Form: FC<IFormProps> = ({
   children,
   validationRules,
   onSubmit,
+  submitResult,
   successMessage = "Default Success!",
   errorMessage = "Default something went wrong message",
 }) => {
@@ -76,7 +78,7 @@ export const Form: FC<IFormProps> = ({
 
     const fieldErrors: string[] = [];
 
-    rules.forEach(rule => {
+    rules.forEach((rule) => {
       const error = rule.validator(values[fieldName], rule.arg);
 
       if (error) {
@@ -98,6 +100,12 @@ export const Form: FC<IFormProps> = ({
       setSubmitting(true);
       setSubmitError(false);
       const result = await onSubmit(values);
+
+      // The result may be passed through as a prop
+      if (undefined === result) {
+        return;
+      }
+
       setErrors(result.errors || {});
       setSubmitError(false === result.success);
       setSubmitting(false);
@@ -111,7 +119,7 @@ export const Form: FC<IFormProps> = ({
     let hasErrors: boolean = false;
 
     if (validationRules) {
-      Object.keys(validationRules).forEach(fieldName => {
+      Object.keys(validationRules).forEach((fieldName) => {
         newErrors[fieldName] = validate(fieldName);
         if (newErrors[fieldName].length > 0) {
           hasErrors = true;
@@ -124,6 +132,18 @@ export const Form: FC<IFormProps> = ({
 
     return formValid;
   };
+
+  const disabled = submitResult
+    ? submitResult.success
+    : submitting || (submitted && !submitError);
+
+  const showError = submitResult
+    ? !submitResult.success
+    : submitted && submitError;
+
+  const showSuccess = submitResult
+    ? submitResult.success
+    : submitted && !submitError;
 
   return (
     // read more about setting array key : value combination states feels new and weird
@@ -143,7 +163,7 @@ export const Form: FC<IFormProps> = ({
     >
       <form noValidate={true} onSubmit={handleSubmit}>
         <fieldset
-          disabled={submitting || (submitted && !submitError)}
+          disabled={disabled}
           css={css`
             margin: 10px auto 0 auto;
             padding: 30px;
@@ -164,7 +184,7 @@ export const Form: FC<IFormProps> = ({
           >
             <PrimaryButton type="submit">{submitCaption}</PrimaryButton>
           </div>
-          {submitted && submitError && (
+          {showError && (
             <p
               css={css`
                 color: red;
@@ -173,7 +193,7 @@ export const Form: FC<IFormProps> = ({
               {errorMessage}
             </p>
           )}
-          {submitted && !submitError && (
+          {showSuccess && (
             <p
               css={css`
                 color: green;
