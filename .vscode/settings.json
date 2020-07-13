@@ -11,5 +11,6 @@
   "prettier.singleQuote": false,
   "html.format.endWithNewline": false,
   "prettier.jsxBracketSameLine": false,
-  "prettier.trailingComma": "all"
+  "prettier.trailingComma": "all",
+  "prettier.arrowParens": "avoid"
 }
