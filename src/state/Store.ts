@@ -11,12 +11,9 @@ import {
 } from "redux";
 
 import thunk, { ThunkAction } from "redux-thunk";
+import { getUnansweredQuestions } from "../api/Questions";
 
-import {
-  getAllQuestionsDummy,
-  IPostQuestionData,
-  postQuestion,
-} from "../utils/DummyQuestions";
+import { IPostQuestionData, postQuestion } from "../utils/DummyQuestions";
 // NOTE these should be always protected by readonly to reduce change of misusage
 interface IQuestionsState {
   readonly loading: boolean;
@@ -62,7 +59,7 @@ export const getUnansweredQuestionsActionCreator: ActionCreator<ThunkAction<
 
     dispatch(gettingUnansweredQuestionsAction);
 
-    const questions = await getAllQuestionsDummy();
+    const questions = await getUnansweredQuestions();
 
     const gotUnansweredQuestions: IGotUnansweredQuestionsAction = {
       type: "GotUnansweredQuestions",

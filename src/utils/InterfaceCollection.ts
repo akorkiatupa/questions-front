@@ -35,8 +35,11 @@ export const mapQuestionFromServer = (
 ): IQuestionData => ({
   ...question,
   created: new Date(question.created.substr(0, 19)),
-  answers: question.answers.map(answer => ({
-    ...answer,
-    created: new Date(answer.created.substr(0, 19)),
-  })),
+
+  answers:
+    question.answers &&
+    question.answers.map(answer => ({
+      ...answer,
+      created: new Date(answer.created.substr(0, 19)),
+    })),
 });

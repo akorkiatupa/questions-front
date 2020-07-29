@@ -52,8 +52,9 @@ export const Question: React.FC<IProps> = ({ data, showContent = true }) => (
         color: ${gray3};
       `}
     >
-      {`Asked by ${data.userName} on
-        ${data.created.toLocaleDateString()} ${data.created.toLocaleTimeString()}`}
+      {`Asked by ${
+        data.userName
+      } on ${data.created.toLocaleDateString()} ${data.created.toLocaleTimeString()}`}
     </div>
   </div>
 );

@@ -4,7 +4,7 @@ import { FC, useState, useEffect } from "react";
 import { Page } from "../components/Page";
 import { RouteComponentProps } from "react-router-dom";
 import { IQuestionData } from "../utils/InterfaceCollection";
-import { searchQuestions } from "../utils/DummyQuestions";
+import { searchQuestions } from "../api/Questions";
 import { css, jsx } from "@emotion/core";
 import { QuestionList } from "../components/QuestionList";
 

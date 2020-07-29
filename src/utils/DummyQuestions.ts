@@ -51,6 +51,25 @@ export const getQuestionDummyRequest = async (
   return results.length === 0 ? null : results[0];
 };
 
+export const getUnansweredQuestions = async (): Promise<IQuestionData[]> => {
+  let unansweredQuestions: IQuestionData[] = [];
+  await fetch("/api/questions/unanswered")
+    .then(response => response.json())
+    .then(body => {
+      unansweredQuestions = body;
+    })
+    .catch(error => {
+      console.error(error);
+    });
+
+  const formattedQuestions = unansweredQuestions.map(question => ({
+    ...question,
+    created: new Date(question.created), // formatting the created date strings as date objects
+  }));
+
+  return formattedQuestions;
+};
+
 export const searchQuestions = async (
   criteria: string,
 ): Promise<IQuestionData[]> => {

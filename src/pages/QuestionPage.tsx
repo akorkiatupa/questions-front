@@ -14,6 +14,7 @@ import { AnswerList } from "../components/AnswerList";
 import { Form, IValues } from "../components/general/Form";
 import { Field } from "../components/general/Field";
 import FormValidator from "../components/general/Validator";
+import { getQuestion } from "../api/Questions";
 
 import {
   HubConnectionBuilder,
@@ -43,7 +44,6 @@ export const QuestionPage: FC<RouteComponentProps<IRouteParams>> = ({
     });
 
     // handle ReceiveQuestion function being called
-
     connection.on("ReceiveQuestion", (question: IQuestionDataFromServer) => {
       console.log("ReceiveQuestion", question);
       setQuestion(mapQuestionFromServer(question));
@@ -94,7 +94,7 @@ export const QuestionPage: FC<RouteComponentProps<IRouteParams>> = ({
 
   useEffect(() => {
     const doGetQuestion = async (questionId: number) => {
-      const foundQuestion = await getQuestionDummyRequest(questionId);
+      const foundQuestion = await getQuestion(questionId);
       setQuestion(foundQuestion);
     };
     let connection: HubConnection;
