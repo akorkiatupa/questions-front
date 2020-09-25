@@ -7,7 +7,7 @@ import {
   mapQuestionFromServer,
   IQuestionDataFromServer,
 } from "../utils/InterfaceCollection";
-import { getQuestionDummyRequest, postAnswer } from "../utils/DummyQuestions";
+import { postAnswer } from "../utils/DummyQuestions";
 import { gray6, gray3 } from "../style/Styles";
 import { css, jsx } from "@emotion/core";
 import { AnswerList } from "../components/AnswerList";
