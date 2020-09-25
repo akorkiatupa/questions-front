@@ -1,9 +1,10 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import App from "../components/App";
+import "@testing-library/jest-dom";
+import App from "../App";
 
 test("renders learn react link", () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const askButton = getByText("Ask a question");
+  expect(askButton).toBeTruthy();
 });
