@@ -22,6 +22,8 @@ import {
   HubConnection,
 } from "@aspnet/signalr";
 
+import { server } from "../AppSettings";
+
 interface IRouteParams {
   questionId: string;
 }
@@ -34,7 +36,7 @@ export const QuestionPage: FC<RouteComponentProps<IRouteParams>> = ({
   const setUpSignalRConnection = async (questionId: number) => {
     // setup connection to real-time SignalR API
     const connection = new HubConnectionBuilder()
-      .withUrl("https://localhost:32768/questionshub")
+      .withUrl(`${server}/questionshub`)
       .withAutomaticReconnect()
       .build();
 
