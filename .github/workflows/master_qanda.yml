@@ -32,4 +32,4 @@ jobs:
           app-name: "qanda"
           slot-name: "production"
           publish-profile: ${{ secrets.AzureAppService_PublishProfile_6da21db456584838aa6652e226326ea1 }}
-          package: /build
+          package: ./build
